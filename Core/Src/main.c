@@ -62,6 +62,10 @@ UART_HandleTypeDef huart1;
 	
 	int k;
 	int i;
+
+  // exp
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
