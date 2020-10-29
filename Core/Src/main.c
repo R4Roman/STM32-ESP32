@@ -62,6 +62,7 @@ UART_HandleTypeDef huart1;
 	
 	int k;
 	int i;
+	
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,7 +95,15 @@ static void MX_USART1_UART_Init(void);
 			
 			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 			
-			HAL_UART_Transmit(&huart1, (uint8_t*)"AT+MQTTPUB=0,\"esp-callback\",\"on\",1,0\r\n", 38, 1000);	
+			if (HAL_GPIO_ReadPin (GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET) {
+			
+			HAL_UART_Transmit(&huart1, (uint8_t*)"AT+MQTTPUB=0,\"esp-callback\",\"on\",1,0\r\n", 38, 1000);
+			
+			} else {
+				
+				HAL_UART_Transmit(&huart1, (uint8_t*)"AT+MQTTPUB=0,\"esp-callback\",\"off\",1,0\r\n", 39, 1000);
+				
+			}	
 			
 			HAL_Delay(300);
 			
@@ -107,7 +116,15 @@ static void MX_USART1_UART_Init(void);
 			
 			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 			
+			if (HAL_GPIO_ReadPin (GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) {
+			
 			HAL_UART_Transmit(&huart1, (uint8_t*)"AT+MQTTPUB=0,\"esp-callback\",\"off\",1,0\r\n", 39, 1000);
+			
+			} else {
+				
+				HAL_UART_Transmit(&huart1, (uint8_t*)"AT+MQTTPUB=0,\"esp-callback\",\"on\",1,0\r\n", 38, 1000);
+				
+			}
 			
 			HAL_Delay(300);
 			
